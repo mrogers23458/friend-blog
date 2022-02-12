@@ -7,11 +7,11 @@ const postSchema = new Schema(
             required: true
         },
 
-        content: {
+        postContent: {
             type: String
         },
 
-        owner: {
+        creatorId: {
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
