@@ -4,23 +4,23 @@ const resolvers = {
     Query: {
         users: async () => {
             const users = User.find().populate({path:'posts', populate:{path: 'comments', populate:'commentorId'}}).populate('comments')
-            console.log(users.getPopulatedPaths())
             return users
         },
 
         user: async(parent, { id } ) => {
             const user = User.findOne({ id }).populate('posts')
-            console.log(user)
             return user
         },
 
         posts: async () => {
-            const posts = Post.find().populate('creatorId').populate('comments')
+            const posts = Post.find().populate('creatorId').populate({path: 'comments', populate:'commentorId'})
             return posts
         },
 
-        post: async (parent, { id }) => {
-            const post = Post.findOne({ id }).populate('creatorId').populate('comments')
+        post: async (parent, { postId }) => {
+            const post = Post.findOne({ _id: postId }).populate('creatorId').populate({path: 'comments', populate:'commentorId'})
+            console.log(post)
+            console.log(postId)
             return post
         },
 
@@ -52,6 +52,26 @@ const resolvers = {
             const post = await Post.findOneAndUpdate({_id: postId}, {$addToSet: {comments: comment.id}})
             const user = await User.findOneAndUpdate({_id: commentorId}, {$addToSet: {comments: comment.id}})
             return comment
+        },
+
+        deleteUser: async(parent, { userId }) => {
+            console.log(user)
+            const deletedUserPosts = await Post.deleteMany({creatorId: userId})
+            const deletedUserComments = await Comment.deleteMany({commentorId: userId})
+            console.log('deleted user posts' + deletedUserPosts)
+            console.log('deleted user comment' + deletedUserComments)
+            const deletedUser = User.findOneAndDelete({_id: userId})
+            return deletedUser
+        },
+
+        deletePost: async(parent, {postId}) => {
+            const deletedPost = Post.findOneAndDelete({_id: postId})
+            return deletedPost
+        },
+
+        deleteComment: async(parent, {commentId}) => {
+            const deletedComment = Comment.findOneAndDelete({_id: commentId})
+            return deletedComment
         }
     }
 }

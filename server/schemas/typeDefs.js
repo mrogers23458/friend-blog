@@ -32,7 +32,7 @@ const typeDefs = gql`
         users: [User]
         user(id: ID): User
         posts: [Post]
-        post(id: ID): Post
+        post(postId: ID): Post
         comments: [Comment]
         comment(id: ID): Comment
     }
@@ -56,6 +56,18 @@ const typeDefs = gql`
             commentContent: String
             postId: String
             commentorId: String
+        ): Comment
+
+        deleteUser(
+            userId: ID
+        ): User
+
+        deletePost(
+            postId: ID
+        ): Post
+
+        deleteComment(
+            commentId: ID
         ): Comment
     }
 
