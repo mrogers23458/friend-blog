@@ -13,6 +13,11 @@ const typeDefs = gql`
 
     }
 
+    type Auth {
+    token: ID!
+    user: User
+    }
+
     type Post {
         _id: ID
         title: String
@@ -44,7 +49,12 @@ const typeDefs = gql`
             email: String
             username: String
             password: String
-        ): User
+        ): Auth
+
+        login(
+            username: String!
+            password: String!
+        ): Auth
 
         addPost(
             title: String

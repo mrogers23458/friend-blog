@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { useNavigate } from 'react-router-dom'
 import { GET_POSTS } from '../utils/query'
-import { Card, Button, Spinner } from 'react-bootstrap'
+import { Card, Spinner } from 'react-bootstrap'
 
 export default function Home(){
 

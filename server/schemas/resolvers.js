@@ -1,4 +1,5 @@
 const { User, Post, Comment } = require ("../models")
+const { signToken } = require('../utils/auth')
 
 const resolvers = {
     Query: {
@@ -19,8 +20,6 @@ const resolvers = {
 
         post: async (parent, { postId }) => {
             const post = Post.findOne({ _id: postId }).populate('creatorId').populate({path: 'comments', populate:'commentorId'})
-            console.log(post)
-            console.log(postId)
             return post
         },
 
@@ -38,7 +37,8 @@ const resolvers = {
     Mutation: {
         addUser: async(parent, {first, last, username, email, password}) => {
             const user = await User.create({ first, last, username, email, password})
-            return user
+            const token = signToken(user)
+            return {user, token}
         },
 
         addPost: async(parent, {title, postContent, creatorId}) => {
