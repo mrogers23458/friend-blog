@@ -43,3 +43,18 @@
   margin-left: 10vw;
   margin-top: 5vh;
 }
+
+.profile-header {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 1.5rem;
+  margin-bottom: 5vh;
+}
+
+.delete-account-button {
+  margin-top: 5vh;
+}
+
+.profile-welcome-text {
+  font-size: 1.5rem;
+}

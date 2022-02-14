@@ -1,19 +1,16 @@
-import { useApolloClient, useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import { useParams } from "react-router-dom"
 import { GET_POST } from "../utils/query"
 import { Card } from 'react-bootstrap'
 
 export default function Comments() {
     const params = useParams()
-    console.log(params)
-    console.log(params.id)
     const getId = (params.id)
     const {loading, error, data } = useQuery(GET_POST, {
         variables: {
             postId: getId
         }
     })
-    const client = useApolloClient()
 
     if (loading) {
         return (
@@ -28,10 +25,8 @@ export default function Comments() {
     }
 
     if (data) {
-        console.log(data)
         const comments = data.post.comments
-        console.log(comments)
-        console.log(getId)
+        
         return (
         <div className="post-comment-view-box">
             <div className="post-header">
@@ -42,7 +37,7 @@ export default function Comments() {
             </div>
             <div className="comments-box">
                 {comments.map((comment)=>
-                    <Card style={{ width: '80vw', marginBottom: '2vh' }}>
+                    <Card key={comment._id} style={{ width: '80vw', marginBottom: '2vh' }}>
                     <Card.Body>
                       <Card.Text>
                           {comment.commentContent}

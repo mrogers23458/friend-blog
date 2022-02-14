@@ -3,16 +3,16 @@ const express = require('express')
 const db = require ('./config/connection')
 const typeDefs = require('./schemas/typeDefs')
 const resolvers = require('./schemas/resolvers')
-const schema = {typeDefs, resolvers}
-
+const { authMiddleware } = require('./utils/auth')
 
 async function startServer(typeDefs, resolvers){
 
-    const PORT = process.env.PORT || 3001
+    const PORT = 3001 || process.env.PORT
     const app = express()
+
     const server = new ApolloServer({
         typeDefs,
-        resolvers
+        resolvers,
     })
 
     await server.start()

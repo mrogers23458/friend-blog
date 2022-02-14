@@ -25,7 +25,7 @@ function App() {
         <Route path="/posts/comments/:id" element={<Comments />} />
       </Routes>
     </div>
-  );
+  )
 }
 
 export default App;

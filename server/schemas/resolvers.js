@@ -1,6 +1,6 @@
+const { AuthenticationError } = require('apollo-server-express');
 const { User, Post, Comment } = require ("../models")
-const { signToken } = require('../utils/auth')
-
+const { signToken } = require('../utils/auth.js')
 const resolvers = {
     Query: {
         users: async () => {
@@ -8,8 +8,8 @@ const resolvers = {
             return users
         },
 
-        user: async(parent, { id } ) => {
-            const user = User.findOne({ id }).populate('posts')
+        user: async(parent,  { id } ) => {
+            const user = User.findOne({ id}).populate({path:'posts', populate:{path: 'comments', populate:'commentorId'}}).populate({path: 'comments', populate:{path: 'postId'}})
             return user
         },
 
@@ -35,10 +35,10 @@ const resolvers = {
     },
 
     Mutation: {
-        addUser: async(parent, {first, last, username, email, password}) => {
-            const user = await User.create({ first, last, username, email, password})
+        addUser: async(parent, {username, email, password}) => {
+            const user = await User.create({email, username, password})
             const token = signToken(user)
-            return {user, token}
+            return { token, user }
         },
 
         addPost: async(parent, {title, postContent, creatorId}) => {
@@ -55,11 +55,9 @@ const resolvers = {
         },
 
         deleteUser: async(parent, { userId }) => {
-            console.log(user)
+            console.log(userId)
             const deletedUserPosts = await Post.deleteMany({creatorId: userId})
             const deletedUserComments = await Comment.deleteMany({commentorId: userId})
-            console.log('deleted user posts' + deletedUserPosts)
-            console.log('deleted user comment' + deletedUserComments)
             const deletedUser = User.findOneAndDelete({_id: userId})
             return deletedUser
         },
@@ -72,6 +70,25 @@ const resolvers = {
         deleteComment: async(parent, {commentId}) => {
             const deletedComment = Comment.findOneAndDelete({_id: commentId})
             return deletedComment
+        },
+
+        login: async (parent, {username, password}) => {
+            const loggedIn = await User.findOne({ username });
+
+            if (!loggedIn) {
+                throw new AuthenticationError('No account with this e-mail found')
+                
+            }
+
+            const checkPass = await loggedIn.isCorrectPassword(password)
+
+            if (!checkPass) {
+                throw new AuthenticationError('Incorrect Password test test test')
+            }
+
+            const token = signToken(loggedIn)
+
+            return { token, loggedIn }
         }
     }
 }

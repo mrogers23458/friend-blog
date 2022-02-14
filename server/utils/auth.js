@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 
-const secret = 'mysecretssshhhhhhh';
+const secret = 'superannonymouseSecretSHHH02020202020';
 const expiration = '2h';
 
 module.exports = {
   authMiddleware: function ({ req }) {
+    console.log('testing')
     // allows token to be sent via req.body, req.query, or headers
     let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -29,8 +30,9 @@ module.exports = {
     return req;
   },
 
-  signToken: function ({ email, firstName, lastName, _id }) {
-    const payload = { email, firstName, lastName, _id };
-    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  signToken: function ({ email, username, _id }) {
+    const payload = { email, username, _id };
+    const sign = jwt.sign({ payload: payload }, secret, { expiresIn: expiration });
+    return sign
   },
 };

@@ -5,8 +5,15 @@ import { Offcanvas } from 'react-bootstrap'
 import {Form} from 'react-bootstrap'
 import { FormControl } from 'react-bootstrap'
 import {Button} from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import auth from '../utils/auth'
 
 export default function Topnav (){
+  const navigate = useNavigate()
+  const handleLogout = function () {
+    auth.logout()
+    navigate('/')
+  }
     return(
         <Navbar bg="dark" variant='dark' expand={false}>
         <Container fluid>
@@ -27,6 +34,7 @@ export default function Topnav (){
                 <Nav.Link href="/post">Make a post</Nav.Link>
                 <Nav.Link href="/register">Register</Nav.Link>
                 <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link onClick={handleLogout} href="/">Logout</Nav.Link>
               </Nav>
               <Form className="d-flex">
                 <FormControl

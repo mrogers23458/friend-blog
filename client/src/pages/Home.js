@@ -20,15 +20,11 @@ export default function Home(){
     }
 
     if (data) {
-        console.log(data)
         const posts = data.posts
-        const comments = posts.map((post) => post.comments )
-        console.log(comments)
-        console.log(posts)
         return(
             <div className='home-box'>
                 {posts.map((post)=>
-                    <Card style={{ width: '80vw', textAlign: 'center', marginBottom: '2vh' }}>
+                    <Card key={post._id} style={{ width: '80vw', textAlign: 'center', marginBottom: '2vh' }}>
                     <Card.Body>
                       <Card.Title><a href={`/posts/comments/${post._id}`}>{post.title}</a></Card.Title>
                         <Card.Text>
