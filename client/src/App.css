@@ -5,7 +5,7 @@
   margin-top: 5vh;
 }
 
-.post-comment-view-box {
+.comment-view-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,4 +57,27 @@
 
 .profile-welcome-text {
   font-size: 1.5rem;
+}
+
+.post-title {
+  font-size: 1.5rem;
+  margin-top: 5vh;
+}
+
+.comment-text{
+  overflow-wrap: break-word
+}
+
+.comment-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5vh;
+}
+
+.results-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
 }

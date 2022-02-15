@@ -3,10 +3,11 @@ import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { ADD_POST } from '../utils/mutation'
 import auth from '../utils/auth'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 export default function Createapost() {
+    const navigate = useNavigate()
     const user = auth.getUser().payload
-    console.log(user)
     const [postData, setPostData] = useState({
         title: '',
         postContent: '',
@@ -22,7 +23,6 @@ export default function Createapost() {
 
     const handleFormSubmit = async () => {
         const {title, postContent, creatorId } = postData
-        console.log(title, postContent, creatorId)
 
         await createPost({
             variables: {
@@ -30,23 +30,10 @@ export default function Createapost() {
                 postContent,
                 creatorId
             }
+        }).then((response) => {
+            console.log(response.data.addPost)
+            navigate(`/posts/comments/${response.data.addPost._id}`)
         })
-
-        if (loading) {
-            return (
-                <div>
-                    loading...
-                </div>
-            )
-        }
-
-        if (error) {
-            console.error(error)
-        }
-
-        if (data) {
-            console.log(data)
-        }
     }
     
     return(
@@ -61,7 +48,7 @@ export default function Createapost() {
                 <Form.Label>What do you want to say?</Form.Label>
                 <Form.Control as="textarea" rows={10} placeholder="text goes here..." style={{height: "40vh", resize:"none"}} name="postContent" onChange={handleChange}/>
             </Form.Group>
-            <Button onClick={handleFormSubmit} variant="primary" type="button">
+            <Button onClick={handleFormSubmit} variant="primary">
                 Post it!
             </Button>
         </Form>

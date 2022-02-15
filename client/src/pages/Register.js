@@ -1,10 +1,11 @@
-import { useMutation } from '@apollo/client'
+import { useApolloClient, useMutation } from '@apollo/client'
 import { useState } from 'react'
 import {Form, Button} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { ADD_USER } from '../utils/mutation'
 import auth from '../utils/auth'
 export default function Register () {
+    
     const navigate = useNavigate()
     const [regCreds, setRegCreds] = useState({
         email: '',

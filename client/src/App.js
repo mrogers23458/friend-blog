@@ -10,6 +10,7 @@ import Createapost from './pages/Createapost';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
+import SearchResults from './pages/SearchResults';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
       <Topnav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/post" element={<Createapost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />

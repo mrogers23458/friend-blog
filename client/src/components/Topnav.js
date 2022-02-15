@@ -7,12 +7,25 @@ import { FormControl } from 'react-bootstrap'
 import {Button} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import auth from '../utils/auth'
-
+import { useState } from 'react'
 export default function Topnav (){
   const navigate = useNavigate()
   const handleLogout = function () {
     auth.logout()
     navigate('/')
+  }
+
+  const [searchParams, setSearchParams] = useState({
+    search: ''
+  })
+
+  const handleChange = function (e) {
+    setSearchParams({...searchParams, [e.target.name]:e.target.value})
+  }
+
+  const handleSearch = function () {
+    const params = searchParams.search
+    navigate('/search')
   }
     return(
         <Navbar bg="dark" variant='dark' expand={false}>
@@ -38,12 +51,13 @@ export default function Topnav (){
               </Nav>
               <Form className="d-flex">
                 <FormControl
-                  type="search"
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  name="search"
+                  onChange={handleChange}
                 />
-                <Button variant="outline-success">Search</Button>
+                <Button onClick={handleSearch} type="submit" variant="outline-success">Search</Button>
               </Form>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

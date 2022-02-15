@@ -31,3 +31,31 @@ mutation addPost ($title: String, $postContent: String, $creatorId:String) {
   }
 }
 `
+
+export const ADD_COMMENT = gql` 
+mutation addComment($commentorId: String, $postId: String, $commentContent: String) {
+  addComment (commentorId: $commentorId, postId: $postId, commentContent: $commentContent) {
+    _id
+    commentorId {
+      _id
+      username
+    }
+    postId {
+      _id
+      title
+    }
+    commentContent
+  }
+}
+`
+
+export const LOGIN = gql `
+mutation login($username: String!, $password: String!){
+  login(username: $username, password: $password) {
+  token
+  user {
+    username
+   } 
+  }
+}
+`

@@ -30,8 +30,6 @@ export default function Home(){
                         <Card.Text>
                             {post.postContent}
                         </Card.Text>
-                      <Card.Link href="#">Upvote</Card.Link>
-                      <Card.Link href="#">Downvote</Card.Link>
                     </Card.Body>
                   </Card>
                 )}

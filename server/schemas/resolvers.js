@@ -8,8 +8,8 @@ const resolvers = {
             return users
         },
 
-        user: async(parent,  { id } ) => {
-            const user = User.findOne({ id}).populate({path:'posts', populate:{path: 'comments', populate:'commentorId'}}).populate({path: 'comments', populate:{path: 'postId'}})
+        user: async(parent, {username} ) => {
+            const user = User.findOne({ username: username }).populate({path:'posts', populate:{path: 'comments', populate:'commentorId'}}).populate({path: 'comments', populate:{path: 'postId'}})
             return user
         },
 
@@ -55,7 +55,6 @@ const resolvers = {
         },
 
         deleteUser: async(parent, { userId }) => {
-            console.log(userId)
             const deletedUserPosts = await Post.deleteMany({creatorId: userId})
             const deletedUserComments = await Comment.deleteMany({commentorId: userId})
             const deletedUser = User.findOneAndDelete({_id: userId})
@@ -73,22 +72,24 @@ const resolvers = {
         },
 
         login: async (parent, {username, password}) => {
-            const loggedIn = await User.findOne({ username });
-
-            if (!loggedIn) {
+            console.log(username, password)
+            const user = await User.findOne({ username: username});
+            console.log(user)
+            if (!user) {
                 throw new AuthenticationError('No account with this e-mail found')
                 
             }
 
-            const checkPass = await loggedIn.isCorrectPassword(password)
+            console.log(password)
+            const checkPass = await user.isCorrectPassword(password)
 
             if (!checkPass) {
                 throw new AuthenticationError('Incorrect Password test test test')
             }
 
-            const token = signToken(loggedIn)
-
-            return { token, loggedIn }
+            const token = signToken(user)
+            console.log(token)
+            return { token, user }
         }
     }
 }
