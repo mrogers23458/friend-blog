@@ -1,9 +1,9 @@
-## game-blog
+# friend-blog
 
-# Purpose
+## Purpose
 The purpose of building this react web app, was to enhance my knowledge with MERN technology stack, as well as my knowledge with ApolloClient/Server and graphQl.
 
-# Tech stack
+## Tech stack
 MongoDb
 Mongoose
 Node
@@ -13,5 +13,5 @@ Apollo-Client
 React
 GraphQL
 
-# Demo
+## Demo
 Available [Here](https://mrogers23458-friend-blog.herokuapp.com/)
