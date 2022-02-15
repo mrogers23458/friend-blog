@@ -30,7 +30,7 @@ export default function Topnav (){
     return(
         <Navbar bg="dark" variant='dark' expand={false}>
         <Container fluid>
-          <Navbar.Brand href="/">Game-Blog</Navbar.Brand>
+          <Navbar.Brand href="/">Friends-Blog</Navbar.Brand>
           <Navbar.Toggle aria-controls="offcanvasNavbar" />
           <Navbar.Offcanvas
             id="offcanvasNavbar"

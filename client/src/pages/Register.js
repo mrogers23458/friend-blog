@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { ADD_USER } from '../utils/mutation'
 import auth from '../utils/auth'
 export default function Register () {
-    
+    const [errorMessage, setErrorMessage] = useState({
+        message: ''
+    })
     const navigate = useNavigate()
     const [regCreds, setRegCreds] = useState({
         email: '',
@@ -31,6 +33,10 @@ export default function Register () {
                    email,
                    password
                }
+            }).catch((err) => {
+                setErrorMessage({
+                    message: 'Username or email already in use.'
+                })
             })
 
             if (loading) {
@@ -83,6 +89,9 @@ export default function Register () {
             <Button variant="primary" type="submit" onClick={handleFormSubmit}>
                 Register
             </Button>
+            <div className='error-message'>
+                <p className='error-text'>{errorMessage.message}</p>
+            </div>
         </Form>
     </div>
     )
