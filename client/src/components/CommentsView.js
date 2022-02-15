@@ -8,6 +8,7 @@ export default function CommentsView (props){
         <div className="comment-view-box">
             <div className="post-header">
                 <h1 className="post-title">{data.post.title}</h1>
+                <p>by {data.post.creatorId.username}</p>
             </div>
             <div className="post-content">
                 <p className="post-content">{data.post.postContent}</p>

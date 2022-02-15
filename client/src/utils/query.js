@@ -48,6 +48,9 @@ query post($postId: ID) {
   post(postId: $postId) {
     _id
     title
+    creatorId {
+      username
+    }
     postContent
         comments {
             _id
