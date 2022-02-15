@@ -1,6 +1,7 @@
 import { GET_USER } from "../utils/query"
 import { useQuery } from "@apollo/client"
 import { Accordion, Button } from "react-bootstrap"
+import DeleteAccount from "./DeleteAccount"
 
 
 
@@ -86,6 +87,7 @@ export default function ProfilePage(props) {
                             </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
+                
             </div>
         )
     }
