@@ -11,13 +11,16 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import SearchResults from './pages/SearchResults';
+import React from 'react';
+import GoogleLogin from 'react-google-login';
 
 function App() {
   
   return (
     <div className="App">
-      <Topnav />
-      <Routes>
+{/*       <Topnav /> */}
+      <Login />
+     {/*  <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/post" element={<Createapost />} />
@@ -25,7 +28,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<Register />} />
         <Route path="/posts/comments/:id" element={<Comments />} />
-      </Routes>
+      </Routes> */}
     </div>
   )
 }

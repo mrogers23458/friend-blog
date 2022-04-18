@@ -1,68 +1,38 @@
-import { useMutation } from '@apollo/client'
-import { useState } from 'react'
-import {Form, Button} from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
-import auth from '../utils/auth'
-import { LOGIN } from '../utils/mutation'
+import React from 'react';
 
-export default function Login () {
-    const navigate = useNavigate()
-    const [loginCreds, setLoginCreds] = useState({
-        username:'',
-        password: ''
-    })
+import { GoogleLogin } from 'react-google-login';
 
-    const handleChange = function (e) {
-        setLoginCreds({...loginCreds, [e.target.name]:e.target.value})
-    }
-    console.log(loginCreds)
-    const [login, {loading, error, data}] = useMutation(LOGIN)
+const clientId =
+  '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
 
-    const handleLogin = async (e) => {
-        e.preventDefault()
-        const { username, password } = loginCreds
+function Login() {
+  const onSuccess = (res) => {
+    console.log('Login Success: currentUser:', res.profileObj);
+    alert(
+      `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
+    );
+  };
 
-       const {loading, error, data } = await login({
-            variables: {
-                username,
-                password
-            }
-        })
+  const onFailure = (res) => {
+    console.log('Login failed: res:', res);
+    alert(
+      `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`
+    );
+  };
 
-        if (loading) {
-            return(<div>
-                loading...
-            </div>)
-        }
-
-        if (error) {
-            console.log(error)
-        }
-
-        if (data) {
-            auth.login(data.login.token)
-            navigate('/profile')
-        }
-    }
-    return(
-    <div className="login-box">
-        <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Username</Form.Label>
-                <Form.Control onChange={handleChange} type="text" placeholder="Enter username" name="username" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control onChange={handleChange} type="password" placeholder="Password" name="password" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="stay logged in" />
-            </Form.Group>
-            <Button onClick={handleLogin} variant="primary" type="submit">
-            Submit
-            </Button>
-        </Form>
+  return (
+    <div>
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Login"
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={'single_host_origin'}
+        style={{ marginTop: '100px' }}
+        isSignedIn={true}
+      />
     </div>
-    )
+  );
 }
+
+export default Login;
